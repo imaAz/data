@@ -1,0 +1,2 @@
+# data
+tempat simpan data
