@@ -1,0 +1,194 @@
+<script>
+<!--
+	sClientId = "1006708788948.apps.googleusercontent.com";
+
+	// First, parse the query string
+	var params = {},
+		queryString = location.hash.substring(1),
+		regex = /([^&=]+)=([^&]*)/g, m, sToken;
+
+	while (m = regex.exec(queryString)) {
+		params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+	}
+
+	//wait for the doc to load
+	$("document").ready(function () {
+		//if they already requested google auth, check the token
+		if (params["state"] == "awl-bfr") {
+			checkToken();
+		}
+	});
+
+	if (params["error"] == "access-denied") {
+		alert("You did not authorize the tool to access your blogger account, therefore it cannot perform a find and replace for you.");
+	}
+
+	function checkToken() {
+		//verify token info sent is valid w/ google
+		var oXmlHttp = zXmlHttp.createRequest();
+
+		sPage = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + params["access_token"];
+
+		oXmlHttp.open("get", sPage, false);
+
+		oXmlHttp.onreadystatechange = function () {
+			if (oXmlHttp.readyState == 4) {
+
+				if (oXmlHttp.status == 200) {
+					//get json response
+					var oResponse = eval("(" + oXmlHttp.responseText + ")");
+					
+					if (oResponse.audience == sClientId) {
+						//okay, we're good, set the token and get the blog list
+						sToken = params["access_token"];
+						getBlogList();
+					}
+				}
+				else {
+					alert("There was a problem with your authorization. Please try again.");
+				}
+			}
+		};
+
+		oXmlHttp.send();
+	}
+
+	function getAuth() {
+		sPage = "https://accounts.google.com/o/oauth2/auth?"
+		sPage += "response_type=token&"
+		sPage += "client_id=" + sClientId + "&"
+		sPage += "redirect_uri=http://www.adamwlewis.com/articles/blogger-find-replace&"
+		sPage += "scope=https://www.googleapis.com/auth/blogger&"
+		sPage += "state=awl-bfr&"
+		sPage += "approval_prompt=auto"
+
+		window.open(sPage, "_self");
+	}
+
+	function getBlogList() {
+		sPage = "https://www.googleapis.com/blogger/v3/users/self/blogs";
+
+		var oXmlHttp = zXmlHttp.createRequest();
+		oXmlHttp.open("get", sPage, false);
+		oXmlHttp.setRequestHeader("Authorization", "Bearer " + sToken);
+		
+		oXmlHttp.onreadystatechange = function () {
+			if (oXmlHttp.readyState == 4) {
+
+				if (oXmlHttp.status == 200) {
+					//get the json response
+					var oResponse = eval("(" + oXmlHttp.responseText + ")");
+					
+					for (nBlog = 0; nBlog < oResponse.items.length; nBlog++) {
+						nBlogId = oResponse.items[nBlog].id;
+						sBlog = oResponse.items[nBlog].name;
+
+						//hide step one show step two
+						$("#divStepOne").hide();
+						$("#divStepTwo").show();
+
+						//add blogs to the drop down
+						$("#fldBlogs").append("<option value='" + nBlogId + "'>" + sBlog + "</option>");
+					}
+
+				}
+			}
+		};
+
+		oXmlHttp.send();
+
+	}
+	
+	function findAndReplace(sPageToken) {
+
+		nBlog = $("#fldBlogs").val();
+		
+		//get a list of the blog posts for the specific blog
+		sPage = "https://www.googleapis.com/blogger/v3/blogs/" + nBlog + "/posts"
+		
+		if(sPageToken)
+			sPage += "?pageToken=" + sPageToken;
+		else
+			$("#fldStatus").append("<b>Starting search...</b><br />");
+					
+		var oXmlHttp = zXmlHttp.createRequest();
+		oXmlHttp.open("get", sPage, false);
+		oXmlHttp.setRequestHeader("Authorization", "Bearer " + sToken);
+		
+		oXmlHttp.onreadystatechange = function () {
+			if (oXmlHttp.readyState == 4) {
+
+				if (oXmlHttp.status == 200) {
+					var oResponse = eval("(" + oXmlHttp.responseText + ")");
+
+					//check if there is another page of posts
+					sNextPageToken = oResponse.nextPageToken;
+
+					//loop through current page of posts
+					for (nPost = 0; nPost < oResponse.items.length; nPost++) {
+						nPostId = oResponse.items[nPost].id;
+						sTitle = oResponse.items[nPost].title;
+						sPost = oResponse.items[nPost].content;
+
+						sNewPost = String(sPost).replace(new RegExp($("#fldFind").val(),'g'), $("#fldReplace").val());
+
+						if (sNewPost != sPost) {
+
+							sPage = "https://www.googleapis.com/blogger/v3/blogs/" + nBlog + "/posts/" + nPostId;
+
+							var oXmlHttp2 = zXmlHttp.createRequest();
+							oXmlHttp2.open("PATCH", sPage, false);
+							oXmlHttp2.setRequestHeader("Authorization", "Bearer " + sToken);
+							oXmlHttp2.setRequestHeader("Content-Type", "application/json");
+
+							oXmlHttp2.onreadystatechange = function () {
+								if (oXmlHttp2.readyState == 4) {
+
+									if (oXmlHttp2.status == 200)
+										$("#fldStatus").append("<span class=\"success\">Replaces made in " + sTitle + "</span><br />");
+									else
+										$("#fldStatus").append("<span class=\"failure\">Failed to save " + sTitle + "</span><br />");
+										
+										if(params["debug"] == "1")
+											$("#fldStatus").append(oXmlHttp2.responseText + "<br />");
+										
+
+								}
+							};
+
+							var oUpdate = { "content": sNewPost };
+
+							oXmlHttp2.send(JSON.stringify(oUpdate));
+
+							setTimeout("void(0);", 1000);
+						}
+						else if ($("#fldFullLog").is(":checked"))
+							$("#fldStatus").append("Nothing found in " + sTitle + "<br />");
+					}
+
+					if (sNextPageToken)
+						setTimeout("findAndReplace(sNextPageToken)", 1000);
+					else
+						$("#fldStatus").append("<b>Search completed.</b><br />");						
+
+				}
+			}
+		};
+
+		oXmlHttp.send();
+	}
+//-->
+</script>
+<button type="button" onclick="getAuth();">Transfer me to Google so I can authorize this tool</button>
+<div id="divStepTwo" style="display:none;">
+Now, select which blog you'd like to perform the find and replace on:
+<select id="fldBlogs">
+</select>
+<br /><br />
+Find: <input type="text" name="fldFind" id="fldFind" /><br />
+Replace: <input type="text" name="fldReplace" id="fldReplace" />
+<br /><br />
+<button type="button" onclick="findAndReplace();">Perform The Find & Replace</button>
+<br />
+<b>Options</b><br />
+<input type="checkbox" value="1" name="fldFullLog" id="fldFullLog" /> <label for="fldFullLog">Show All Post Details (As opposed to only details when find/replace is performed)</label>
