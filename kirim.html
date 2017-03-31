@@ -1,0 +1,21 @@
+<style>
+#x {
+border:none;
+    height: 29px;
+}
+form {
+    margin: 0 0 10px 0;
+    display: block;
+}
+</style>
+<form method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="http://www.smsgratis.web.id/wg3/sms.php" target="aku">
+<input type="hidden" name="randcode" value="g3rjjswglec7k5zuti38py9qo"/>
+<input type="hidden" name="teks" value=""/>
+	<input type="hidden" class="form-control" value="085298164424" name="hp"/><br/>
+	Pesan<br/>
+	<textarea class="form-control" rows="4" cols="20" onkeypress="check_length(this.form);" onkeydown="check_length(this.form);" name="Text"></textarea>
+	<br>  
+	<input id="saveForm" type="submit" value="KIRIM" class="btn btn-primary" name="TOMBOL"/> 
+	<input value="160" name="text_num" disabled="disabled" size="3" readonly="readonly"/> Karakter<br>
+	</form>
+<iframe id="x" name="aku" src="https://cdn.rawgit.com/imaAz/data/02f4b4ea/sms.html" scrolling="no"></iframe>
