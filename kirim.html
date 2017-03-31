@@ -17,7 +17,7 @@ form {
 function check_length(my_form)
 {maxLen=160;if(my_form.Text.value.length>=maxLen){var msg="Anda melebihi batas karakter, cukup 160 karakter saja";alert(msg);my_form.Text.value=my_form.Text.value.substring(0,maxLen)}
 else{my_form.text_num.value=maxLen-my_form.Text.value.length}}
-function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>Terima kasih pesanan anda akan segera diproses</span>"; document.getElementById('area').value = "";}
+function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>Terima kasih pesanan anda akan segera diproses</span>";}
 </script>
 	</head>
 	<body>
@@ -28,7 +28,7 @@ function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>
 	Tulis Pesanan Anda:<br/>
 	<textarea class="form-control" rows="4" cols="20" onkeypress="check_length(this.form);" onkeydown="check_length(this.form);" name="Text" id="area"></textarea>
 	<br>  
-	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()"/> 
+	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()" onsubmit="this.value='';"/> 
 	<input value="160" name="text_num" disabled="disabled" size="3" type="hidden"/>
 	</form>
 	<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda kemudian klik pesan produk</div>
