@@ -2,10 +2,25 @@
 	<head>
 		<title>Widget SMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+		<script>
+	<!--
+	function check_length(my_form)
+	{
+	maxLen = 160;
+	if (my_form.Text.value.length >= maxLen) {
+	var msg = "Anda melebihi batas karakter, cukup 160 karakter saja";
+	alert(msg);
+	my_form.Text.value = my_form.Text.value.substring(0, maxLen);
+	}
+	else{
+	my_form.text_num.value = maxLen - my_form.Text.value.length;}
+	}
+	//-->
+	</script>
 <style>
 #x {
 border:none;
-    height: 29px;
+    height: 80px;
 }
 form {
     margin: 0 0 10px 0;
