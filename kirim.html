@@ -2,24 +2,12 @@
 	<head>
 		<title>Widget SMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-		<script>
-	<!--
-	function check_length(my_form)
-	{
-	maxLen = 160;
-	if (my_form.Text.value.length >= maxLen) {
-	var msg = "Anda melebihi batas karakter, cukup 160 karakter saja";
-	alert(msg);
-	my_form.Text.value = my_form.Text.value.substring(0, maxLen);
-	}
-	else{
-	my_form.text_num.value = maxLen - my_form.Text.value.length;}
-	}
-	//-->
-	function selesai(){
-		document.getElementById("done").innerHTML = "Terima kasih pesanan anda akan segera diproses";
-	}
-	</script>
+<script>
+function check_length(my_form)
+{maxLen=160;if(my_form.Text.value.length>=maxLen){var msg="Anda melebihi batas karakter, cukup 160 karakter saja";alert(msg);my_form.Text.value=my_form.Text.value.substring(0,maxLen)}
+else{my_form.text_num.value=maxLen-my_form.Text.value.length}}
+function selesai(){document.getElementById("done").innerHTML="Terima kasih pesanan anda akan segera diproses"}
+</script>
 <style>
 #x {
 border:none;
@@ -32,17 +20,17 @@ form {
 </style>
 	</head>
 	<body>
-<form method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="http://www.smsgratis.web.id/wg3/sms.php" target="aku">
+<form method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="http://bit.ly/2np7aOY" target="aku">
 <input type="hidden" name="randcode" value="g3rjjswglec7k5zuti38py9qo"/>
 <input type="hidden" name="teks" value=""/>
 	<input type="hidden" class="form-control" value="085298164424" name="Phonenumbers"/><br/>
-	Pesan<br/>
+	Tulis Pesanan Anda:<br/>
 	<textarea class="form-control" rows="4" cols="20" onkeypress="check_length(this.form);" onkeydown="check_length(this.form);" name="Text"></textarea>
 	<br>  
 	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()"/> 
-	<input value="160" name="text_num" disabled="disabled" size="3" readonly="readonly"/> Karakter<br>
+	<input value="160" name="text_num" disabled="disabled" size="3" type="hidden"/>
 	</form>
-		<div id='done'>Tulis nama produknya dan nomor hp anda kemudian klik pesan produk</div>
+	<div id='done'>Tulis nama produknya dan nomor hp anda kemudian klik pesan produk</div>
 <iframe id="x" name="aku" src="no" scrolling="no"></iframe>
 	</body>
 </html>
