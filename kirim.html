@@ -1,6 +1,7 @@
 <html>
-	<head>
-		<title>Widget SMS</title>
+<head>
+<title>Widget SMS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 #x {
 border:none;
@@ -10,9 +11,8 @@ form {
     margin: 0 0 10px 0;
     display: block;
 }
-	.ijo { color: green }
+.ijo { color: green }
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 function check_length(my_form)
 {maxLen=160;if(my_form.Text.value.length>=maxLen){var msg="Anda melebihi batas karakter, cukup 160 karakter saja";alert(msg);my_form.Text.value=my_form.Text.value.substring(0,maxLen)}
@@ -28,7 +28,7 @@ function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>
 	Tulis Pesanan Anda:<br/>
 	<textarea class="form-control" rows="4" cols="20" onkeypress="check_length(this.form);" onkeydown="check_length(this.form);" name="Text" id="area"></textarea>
 	<br>  
-	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()" onsubmit="this.value='';"/> 
+	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()"/> 
 	<input value="160" name="text_num" disabled="disabled" size="3" type="hidden"/>
 	</form>
 	<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda kemudian klik pesan produk</div>
