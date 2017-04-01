@@ -2,6 +2,16 @@
 <head>
 <title>Widget SMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="application/javascript">
+  $(function() {
+    $.getJSON("https://api.ipify.org?format=json",
+      function(json) {
+        $("#ipp").value("IP: ", json.ip);
+      }
+    );
+  });
+</script>
 <style>
 #x {
 border:none;
@@ -27,7 +37,7 @@ function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>
 	<input type="hidden" class="form-control" value="085298164424" name="Phonenumbers"/><br/>
 	Tulis Pesanan Anda:<br/>
 	<textarea class="form-control" rows="4" cols="20" onkeypress="check_length(this.form);" onkeydown="check_length(this.form);" name="Text" id="area"></textarea>
-	<br>  
+	<input type="hidden" id="ipp" value=""/><br>  
 	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()"/> 
 	<input value="160" name="text_num" disabled="disabled" size="3" type="hidden"/>
 	</form>
