@@ -7,7 +7,7 @@
   $(function() {
     $.getJSON("https://api.ipify.org?format=json",
       function(json) {
-        $("#ipp").value("IP: ", json.ip);
+        $("#ipp").val("IP: ", json.ip);
       }
     );
   });
