@@ -13,6 +13,11 @@
   });
 </script>
 <style>
+body {
+    text-align: center;
+    max-width: 300px;
+    margin: 0 auto;
+}
 #x {
 border:none;
 height: 0;
@@ -31,6 +36,8 @@ function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>
 </script>
 	</head>
 	<body>
+		<h1>Tulis Pesanan Anda</h1>
+		<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda (Untuk menghubungi anda) kemudian klik pesan produk.</div><br/>
 <form method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="https://www.smsgratis.web.id/wg3/sms.php" target="aku">
 <input type="hidden" name="randcode" value="g3rjjswglec7k5zuti38py9qo"/>
 <input type="hidden" name="teks" value=""/>
@@ -41,7 +48,6 @@ function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>
 	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()"/> 
 	<input value="160" name="text_num" disabled="disabled" size="3" type="hidden"/>
 	</form>
-	<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda (Untuk menghubungi anda) kemudian klik pesan produk.</div>
 <iframe id="x" name="aku" src="no" scrolling="no"></iframe>
 	</body>
 </html>
