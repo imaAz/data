@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>Keranjang Belanja</title>
+<link rel="icon" href="https://lh6.googleusercontent.com/proxy/hzLr_0amRQFVzJtYVMY_ERoNDySDCTfRbx19G6fN53zni9WmiKhq9sLknlFgXG6Uk8hdU0WSaZYzymQeGpjlQMY5T2Tp_B3lA8twMzjy9_0Z6Pu4Qr0GWfYZsFNUr6NPuV2G7xPNNcT1Q2Q=s0-d"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="application/javascript">
@@ -46,12 +47,11 @@ function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>
 	</head>
 	<body>
 		<h1>Tulis Pesanan Anda</h1>
-		<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda (Untuk menghubungi anda) kemudian klik pesan produk.</div><br/>
+		<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda (Untuk menghubungi anda) kemudian klik pesan produk.</div>
 <form id="hil" method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="https://www.smsgratis.web.id/wg3/sms.php" target="aku">
 <input type="hidden" name="randcode" value="g3rjjswglec7k5zuti38py9qo"/>
 <input type="hidden" name="teks" value=""/>
 	<input type="hidden" class="form-control" value="085298164424" name="Phonenumbers"/><br/>
-	Tulis Pesanan Anda:<br/>
 	<textarea class="form-control" rows="4" cols="20" onkeypress="check_length(this.form);" onkeydown="check_length(this.form);" name="Text" id="area"></textarea>
 	<input type="hidden" id="ipp" value=""/><br>  
 	<input id="saveForm" type="submit" value="Pesan Produk" class="btn btn-primary" name="TOMBOL" onclick="selesai()"/> 
