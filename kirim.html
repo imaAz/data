@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Kerangjang Belanja</title>
+<title>Keranjang Belanja</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="application/javascript">
@@ -34,20 +34,20 @@ form {
 .ijo { color: green }
 textarea {
 	width: 95%;
-	height: 25%
+	height: 15%
 	}
 </style>
 <script>
 function check_length(my_form)
 {maxLen=160;if(my_form.Text.value.length>=maxLen){var msg="Anda melebihi batas karakter, cukup 160 karakter saja";alert(msg);my_form.Text.value=my_form.Text.value.substring(0,maxLen)}
 else{my_form.text_num.value=maxLen-my_form.Text.value.length}}
-function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>Terima kasih pesanan anda akan segera diproses, jika dalam anda merasa tidak ada respon dalam 1 hari, kirim pesan melalui halaman facebook kami di <a href='https://www.facebook.com/pg/WidyaShoppp/about' title='kontak lain'>Widya Shop</a></span>";}
+function selesai(){document.getElementById("done").innerHTML="<span class='ijo'>Terima kasih pesanan anda akan segera diproses, jika dalam anda merasa tidak ada respon dalam 1 hari, kirim pesan melalui halaman facebook kami di <a href='https://www.facebook.com/pg/WidyaShoppp/about' title='kontak lain'>Widya Shop</a></span>";document.getElementById("hil").style.display = "none";}
 </script>
 	</head>
 	<body>
 		<h1>Tulis Pesanan Anda</h1>
 		<div id='done'>Tulis nama produknya, berapa PCS dan nomor hp anda (Untuk menghubungi anda) kemudian klik pesan produk.</div><br/>
-<form method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="https://www.smsgratis.web.id/wg3/sms.php" target="aku">
+<form id="hil" method="post" enctype="multipart-form-data" name="my_form" onsubmit="clearTextBoxCounter()" action="https://www.smsgratis.web.id/wg3/sms.php" target="aku">
 <input type="hidden" name="randcode" value="g3rjjswglec7k5zuti38py9qo"/>
 <input type="hidden" name="teks" value=""/>
 	<input type="hidden" class="form-control" value="085298164424" name="Phonenumbers"/><br/>
